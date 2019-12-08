@@ -1,0 +1,45 @@
+
+VBox {
+  -fx-padding: 10px;
+}
+
+HBox {
+  -fx-spacing: 10px;
+  -fx-padding: 10px;
+  -fx-alignment: center-left;
+}
+
+/*Pane {*/
+/*  -fx-background-color: black;*/
+/*  -fx-min-width: 1000px;*/
+/*  -fx-pref-width: 1000px;*/
+/*  -fx-min-height: 700px;*/
+/*  -fx-pref-height: 700px;*/
+/*}*/
+StackPane {
+  -fx-background-color: black;
+
+  -fx-min-width: 1000px;
+  -fx-pref-width: 1000px;
+  -fx-min-height: 700px;
+  -fx-pref-height: 700px;
+}
+
+Label {
+  -fx-font-size: 12pt;
+  -fx-font-weight: bold;
+}
+
+Button, ToggleButton {
+  -fx-pref-width: 50px;
+  -fx-pref-height: 25px;
+  -fx-min-width: 25px;
+  -fx-min-height: 25px;
+
+}
+
+Spinner {
+  -fx-pref-width: 200px;
+  -fx-min-width: 100px;
+}
+
