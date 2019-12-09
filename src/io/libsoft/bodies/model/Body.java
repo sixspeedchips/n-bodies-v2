@@ -72,22 +72,39 @@ public class Body {
     return new Body(getX(), getY(), getMass(), getDensity(), getVelocity().copy());
   }
 
+
+  public void inelaticCollsion(Body other){
+    double coefficient = 1;
+    double theta = Math.atan2(yDisplacement(other),xDisplacement(other));
+    Vector v = Vector.EMPTY();
+    double vNext = (coefficient * other.mass*()
+
+
+
+  }
   public double getDensity() {
     return density;
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(x, y);
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Body body = (Body) o;
+    return Double.compare(body.x, x) == 0 &&
+        Double.compare(body.y, y) == 0 &&
+        Double.compare(body.mass, mass) == 0 &&
+        Double.compare(body.density, density) == 0 &&
+        vector.equals(body.vector);
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (obj == null || obj.getClass() != getClass()) {
-      return false;
-    }
-    Body other = (Body) obj;
-    return x == other.getX() && y == other.getY();
+  public int hashCode() {
+    return Objects.hash(x, y, vector, mass, density);
   }
 
   @Override

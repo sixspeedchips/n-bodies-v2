@@ -69,7 +69,7 @@ public class Space implements Iterator<State> {
       Random rng = new Random();
       bodies.add(new Body.Builder().x(rng.nextDouble()*bounds)
           .y(rng.nextDouble()*bounds)
-          .velocity(Vector.set(.02,0))
+          .velocity(Vector.set(.005,0))
           .mass(200).density(1).build());
       for (int i = 0; i < n; i++) {
         bodies.add(
