@@ -24,12 +24,26 @@ public final class Vector {
     return new Vector(x, y);
   }
 
-  public static Vector RANDOM(double lowerBound, double upperBound) {
+  public static Vector random(double lowerBound, double upperBound) {
     return set(random.nextDouble() * (upperBound - lowerBound) + lowerBound,
         random.nextDouble() * (upperBound - lowerBound) + lowerBound);
   }
 
-  public static Vector RANDOM(double range) {
+  public static Vector rotateInner(double x, double y, double height, double width, double scale) {
+    x = -x + width / 2;
+    y = y - height / 2;
+    double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    return Vector.set(-(y) * scale / r, -(x) * scale / r);
+  }
+
+  public static Vector rotateOuter(double x, double y, double height, double width, double scale) {
+    x = -x + width / 2;
+    y = y - height / 2;
+    double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    return Vector.set(-y * scale, -x * scale);
+  }
+
+  public static Vector random(double range) {
     return set(random.nextDouble() * range - range / 2,
         random.nextDouble() * range - range / 2);
   }
@@ -38,10 +52,12 @@ public final class Vector {
     return set(0, 0);
   }
 
-  public static Vector GRAVITY(Body current, List<Body> bodies) {
+  public static Vector gravity(Body current, List<Body> bodies) {
     Vector v = Vector.EMPTY();
     for (Body other : bodies) {
-      v.add(Fg(current, other));
+      if (!current.collided(other)) {
+        v.add(Fg(current, other));
+      }
     }
     return v;
   }
@@ -82,14 +98,6 @@ public final class Vector {
 
   public Vector addCopy(Vector v) {
     return Vector.set(getX() + v.getX(), getY() + v.getY());
-  }
-
-  @Override
-  public String toString() {
-    return "Vector{" +
-        "x=" + x +
-        ", y=" + y +
-        '}';
   }
 
   public Vector copy() {

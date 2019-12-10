@@ -14,8 +14,8 @@ import javafx.scene.control.ToggleButton;
 
 public class SpaceController {
 
-  private static final int ITERATIONS_PER_SLEEP = 1;
-  private static final int MS_SLEEP = 1;
+  private static final int MS_SLEEP = 10;
+  private static int ITERATIONS_PER_SLEEP = 50;
   @FXML public Spinner<Double> spinner;
   @FXML private Slider slider;
   @FXML private Button reset;
@@ -27,17 +27,25 @@ public class SpaceController {
   private boolean running;
   private int index;
 
+  public static void setIterationsPerSleep(int iterationsPerSleep) {
+    ITERATIONS_PER_SLEEP = iterationsPerSleep;
+  }
 
   @FXML
   private void initialize() {
-    space = new Space(10,600);
+    space = new Space(200, 1000, 1200);
     spaceView.setSpace(space);
     updater = new Updater();
     reset(null);
-    slider.setMax(0);
     slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-      updateView(newValue.intValue());
+//      updateView(newValue.intValue());
+      setIterationsPerSleep(newValue.intValue());
     });
+    slider.setMin(1);
+    slider.setValue(10);
+    slider.setMax(100);
+    setIterationsPerSleep(((int) slider.getValue()));
+
     initSpinner();
 
   }
@@ -62,8 +70,8 @@ public class SpaceController {
   public void stop() {
     running = false;
     updater.stop();
-    slider.setMax(index);
-    slider.setValue(index);
+//    slider.setMax(index);
+//    slider.setValue(index);
   }
 
   @FXML

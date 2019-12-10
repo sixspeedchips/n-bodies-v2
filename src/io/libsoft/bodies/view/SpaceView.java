@@ -11,7 +11,7 @@ import javafx.scene.transform.Transform;
 
 public class SpaceView extends Canvas {
 
-  private static final double DISPLAY_SIZE = 1;
+  private static final double DISPLAY_SIZE = 2;
   private final int ARR_SIZE = 4;
   private Space space;
   private boolean bound;
@@ -47,10 +47,11 @@ public class SpaceView extends Canvas {
   public void draw(int index) {
     if (space != null) {
       context = getGraphicsContext2D();
-//      context.clearRect(0, 0, getWidth(), getHeight());
-      for (Body body : space.getStates().get(index).getBodies()) {
-        context.setFill(Color.hsb(body.getVelocity().getMagnitude()*255, .7, 1));
-//        context.setFill(Color.WHITE);
+      context.clearRect(0, 0, getWidth(), getHeight());
+//      for (Body body : space.getStates().get(index).getBodies()) {
+      for (Body body : space.getCurrentState().getBodies()) {
+//        context.setFill(Color.hsb(body.getVelocity().getMagnitude()*255, .7, 1));
+        context.setFill(Color.WHITE);
         if (body.inCollision()){
           context.setFill(Color.RED);
         }

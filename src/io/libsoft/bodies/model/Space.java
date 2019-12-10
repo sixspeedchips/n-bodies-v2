@@ -1,29 +1,32 @@
 package io.libsoft.bodies.model;
 
 import io.libsoft.bodies.model.Space.State;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class Space implements Iterator<State> {
 
 
   public static double GRAVITY = .001;
+  public static double COEFFICIENT = .3;
   private List<State> states;
   private State currentState;
   private int numBodies;
+  private double height;
+  private double width;
   private double bounds;
 
-  public Space(int numBodies, double bounds) {
+  public Space(int numBodies, double height, double width) {
     this.numBodies = numBodies;
-    this.bounds = bounds;
+    this.height = height;
+    this.width = width;
     init();
+  }
+
+  public static void setGRAVITY(double GRAVITY) {
+    Space.GRAVITY = GRAVITY;
   }
 
   public List<State> getStates() {
@@ -42,45 +45,46 @@ public class Space implements Iterator<State> {
   @Override
   public State next() {
     currentState = currentState.step();
-    states.add(currentState);
+//    states.add(currentState);
     return currentState;
   }
 
   public void init() {
-    this.currentState = State.nBody(numBodies,bounds);
-    states = new LinkedList<>(Collections.singletonList(currentState));
-  }
-
-  public static void setGRAVITY(double GRAVITY) {
-    Space.GRAVITY = GRAVITY;
+    currentState = State.nBody(numBodies, height, width);
+    states = new LinkedList<>();
+    states.add(currentState);
   }
 
   public static class State {
 
     private List<Body> bodies;
+    private static Random rng;
 
     private State(List<Body> bodies) {
       this.bodies = bodies;
     }
 
 
-    public static State nBody(int n, double bounds) {
+    public static State nBody(int n, double height, double width) {
       List<Body> bodies = new LinkedList<>();
-      Random rng = new Random();
-      bodies.add(new Body.Builder().x(rng.nextDouble()*bounds)
-          .y(rng.nextDouble()*bounds)
-          .velocity(Vector.set(.005,0))
-          .mass(200).density(1).build());
+      rng = new Random();
+      bodies.add(new Body.Builder()
+          .x(width / 2)
+          .y(height / 2)
+//          .velocity(Vector.set(.002,0))
+          .mass(100000).density(100).build());
+      double x, y;
       for (int i = 0; i < n; i++) {
+        x = rng.nextDouble() * width;
+        y = rng.nextDouble() * height;
+
         bodies.add(
             new Body.Builder()
-                .x(rng.nextDouble()*bounds)
-                .y(rng.nextDouble()*bounds)
-//                .x(300+rng.nextDouble())
-//                .y(300+rng.nextDouble())
-                .velocity(Vector.RANDOM(1e-2))
-                .mass(rng.nextDouble())
-                .density(1e-1)
+                .x(x)
+                .y(y)
+                .velocity(Vector.rotateInner(x, y, height, width, 5e-1))
+                .mass(rng.nextDouble() * 20)
+                .density(.5)
                 .build());
       }
       return new State(bodies);
@@ -88,22 +92,21 @@ public class Space implements Iterator<State> {
 
 
     private State step() {
+
       List<Body> nextBodies = new LinkedList<>();
       List<Body> others = new LinkedList<>(bodies);
       Body curr;
       for (int i = 0; i < bodies.size(); i++) {
         curr = others.remove(i);
-        nextBodies.add(curr.apply(Vector.GRAVITY(curr, others)));
+        nextBodies.add(curr.apply(Vector.gravity(curr, others)));
         others.add(i, curr);
       }
       //resolve collisions
       others = new LinkedList<>(nextBodies);
-//      HashSet<Body> resolved = new HashSet<>();
-      Body res;
-       while (others.size()>0){
+      while (others.size() > 0) {
+
         curr = others.remove(0);
-        res = curr.collisions(others);
-//        resolved.add(res);
+        curr.collisions(others);
       }
 
       return new State(nextBodies);

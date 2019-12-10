@@ -4,8 +4,7 @@ VBox {
 }
 
 HBox {
-  -fx-spacing: 10px;
-  -fx-padding: 10px;
+
   -fx-alignment: center-left;
 }
 
@@ -18,11 +17,10 @@ HBox {
 /*}*/
 StackPane {
   -fx-background-color: black;
-
-  -fx-min-width: 1000px;
-  -fx-pref-width: 1000px;
-  -fx-min-height: 700px;
-  -fx-pref-height: 700px;
+  -fx-min-width: 1500px;
+  -fx-pref-width: 1500px;
+  -fx-min-height: 2000px;
+  -fx-pref-height: 2000px;
 }
 
 Label {
