@@ -9,7 +9,7 @@ import java.util.Random;
 public class Space implements Iterator<State> {
 
 
-  public static double GRAVITY = .001;
+  public static double GRAVITY = .00001;
   public static double COEFFICIENT = .3;
   private List<State> states;
   private State currentState;

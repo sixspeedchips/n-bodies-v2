@@ -64,7 +64,7 @@ public class SpaceController {
           Space.setGRAVITY(spinner.getValue());
         }
       });
-      spinner.getValueFactory().setValue(.01);
+    spinner.getValueFactory().setValue(.00001);
   }
 
   public void stop() {
