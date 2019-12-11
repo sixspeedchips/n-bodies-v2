@@ -39,6 +39,7 @@ public class SpaceController {
     reset(null);
     slider.valueProperty().addListener((observable, oldValue, newValue) -> {
 //      updateView(newValue.intValue());
+
       setIterationsPerSleep(newValue.intValue());
     });
     slider.setMin(1);
