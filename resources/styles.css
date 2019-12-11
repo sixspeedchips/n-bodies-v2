@@ -15,7 +15,7 @@ HBox {
 /*  -fx-min-height: 700px;*/
 /*  -fx-pref-height: 700px;*/
 /*}*/
-StackPane {
+StackPane#spaceContainer{
   -fx-background-color: black;
   -fx-min-width: 1500px;
   -fx-pref-width: 1500px;
