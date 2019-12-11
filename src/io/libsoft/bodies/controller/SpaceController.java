@@ -46,7 +46,6 @@ public class SpaceController {
     slider.setValue(10);
     slider.setMax(100);
     setIterationsPerSleep(((int) slider.getValue()));
-
     initSpinner();
 
   }
