@@ -42,6 +42,7 @@ public class Main extends Application {
     stage.sizeToScene();
     stage.show();
     setStageSize(stage, root);
+    
   }
 
 
