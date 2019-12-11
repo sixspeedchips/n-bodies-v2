@@ -47,8 +47,8 @@ public class SpaceController {
     slider.setMax(100);
     setIterationsPerSleep(((int) slider.getValue()));
     initSpinner();
-
   }
+  
   private void initSpinner(){
       spinner.setValueFactory(new SpinnerValueFactory<Double>() {
         double step = 1/2d;
